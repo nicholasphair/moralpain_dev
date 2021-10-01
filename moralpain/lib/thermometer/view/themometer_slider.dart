@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moralpain/thermometer/cubit/thermometer_cubit.dart';
+import 'package:moralpain/assets/constants.dart' as Constants;
 
 class ThermometerSliderTrackShape extends SliderTrackShape {
   // TODO (nphair): Parameterize these.
@@ -209,8 +210,9 @@ class _ThermometerWidgetState extends State<ThermometerWidget> {
             trackHeight: MediaQuery.of(context).size.height,
             activeTrackColor: Colors.black,
             trackShape: ThermometerSliderTrackShape(_value.toInt()),
-            thumbColor: Colors.black,
-            disabledThumbColor: Colors.black,
+            showValueIndicator: ShowValueIndicator.never,
+            valueIndicatorColor: Color(Constants.COLORS_UVA_BLUE),
+            thumbShape: ThermometerThumbShape(),
             overlayShape: RoundSliderOverlayShape(overlayRadius: 10),
           ),
           child: Slider(
@@ -227,5 +229,53 @@ class _ThermometerWidgetState extends State<ThermometerWidget> {
                 });
               }));
     });
+  }
+}
+
+class ThermometerThumbShape extends RoundSliderThumbShape {
+  final _indicatorShape = const RectangularSliderValueIndicatorShape();
+
+  const ThermometerThumbShape();
+
+  @override
+  void paint(PaintingContext context, Offset center,
+      {required Animation<double> activationAnimation,
+      required Animation<double> enableAnimation,
+      required bool isDiscrete,
+      required TextPainter labelPainter,
+      required RenderBox parentBox,
+      required SliderThemeData sliderTheme,
+      required TextDirection textDirection,
+      required double value,
+      required double textScaleFactor,
+      required Size sizeWithOverflow}) {
+    super.paint(
+      context,
+      center,
+      activationAnimation: activationAnimation,
+      enableAnimation: enableAnimation,
+      sliderTheme: sliderTheme,
+      value: value,
+      textScaleFactor: textScaleFactor,
+      sizeWithOverflow: sizeWithOverflow,
+      isDiscrete: isDiscrete,
+      labelPainter: labelPainter,
+      parentBox: parentBox,
+      textDirection: textDirection,
+    );
+    _indicatorShape.paint(
+      context,
+      center,
+      activationAnimation: const AlwaysStoppedAnimation(1),
+      enableAnimation: enableAnimation,
+      labelPainter: labelPainter,
+      parentBox: parentBox,
+      sliderTheme: sliderTheme,
+      value: value,
+      textScaleFactor: 0.6,
+      sizeWithOverflow: sizeWithOverflow,
+      isDiscrete: isDiscrete,
+      textDirection: textDirection,
+    );
   }
 }
