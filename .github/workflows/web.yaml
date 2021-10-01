@@ -13,8 +13,9 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-      - uses: bluefireteam/flutter-gh-pages@v7
+      - uses: nicholasphair/flutter-gh-pages@main
         with:
           workingDir: moralpain
+          buildDir: ${{ steps.extract_branch.outputs.branch }}
           webRenderer: canvaskit
           baseHref: /moralpain_dev/${{ steps.extract_branch.outputs.branch }}/
