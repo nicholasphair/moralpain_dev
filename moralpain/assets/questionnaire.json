@@ -16,8 +16,7 @@
 	  "001_13": "Provide false hope",
 	  "001_14": "Hastening dying",
 	  "001_15": "Lack of truth-telling",
-	  "001_16": "Unclear goals of care (lack of plan)",
-	  "001_17": "Other"
+	  "001_16": "Unclear goals of care (lack of plan)"
 	}
   },
   {
@@ -32,8 +31,7 @@
 	  "002_05": "Incomplete information about the situation",
 	  "002_06": "Lack of assertiveness",
 	  "002_07": "Self-doubt",
-	  "002_10": "Socialization to follow others",
-	  "002_11": "Other"
+	  "002_10": "Socialization to follow others"
 	}
   },
   {
@@ -49,8 +47,7 @@
 	  "003_06": "Policies and priorities that conflict with care needs",
 	  "003_07": "Tolerance of disruptive/abusive behavior",
 	  "003_10": "Compromising care to reduce costs",
-	  "003_11": "Hierarchies within healthcare system",
-	  "003_12": "Other"
+	  "003_11": "Hierarchies within healthcare system"
 	}
   },
   {
@@ -60,8 +57,7 @@
 	"options": {
 	  "004_01": "Follow treatment plan due to fear of litigation",
 	  "004_02": "Compromise care due to insurance pressure or fear of litigation",
-	  "004_03": "Tension between ethical and legal",
-	  "004_04": "Other"
+	  "004_03": "Tension between ethical and legal"
 	}
   },
   {
@@ -71,8 +67,7 @@
 	"options": {
 	  "005_02": "Intra-professional conflict (ex. RN to RN)",
 	  "005_03": "Inter-professional conflict (ex. RN to MD)",
-	  "005_04": "Poor collegial relationships",
-	  "005_05": "Other"
+	  "005_04": "Poor collegial relationships"
 	}
   }
 ]
