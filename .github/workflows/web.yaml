@@ -1,10 +1,6 @@
 name: Publish to GitHub Pages
 
-on:
-  push:
-    branches: 
-      - main
-      - webpage
+on: push
 
 jobs:
   build:
@@ -13,8 +9,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
           workingDir: moralpain
           webRenderer: canvaskit
-          baseHref: /moralpain_dev/
+          baseHref: /moralpain_dev/${{ steps.extract_branch.outputs.branch }}/
