@@ -1,7 +1,7 @@
 //
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
-// @dart=2.0
+
 
 // ignore_for_file: unused_element, unused_import
 // ignore_for_file: always_put_required_named_parameters_first
@@ -17,9 +17,9 @@ class Survey {
     this.sections = const [],
   });
 
-  String version;
+  String? version;
 
-  List<SurveySection> sections;
+  List<SurveySection?>? sections;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is Survey &&
@@ -49,7 +49,7 @@ class Survey {
   /// Returns a new [Survey] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static Survey fromJson(dynamic value) {
+  static Survey? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
       return Survey(
@@ -60,13 +60,13 @@ class Survey {
     return null;
   }
 
-  static List<Survey> listFromJson(dynamic json, {bool emptyIsNull, bool growable,}) =>
+  static List<Survey?>? listFromJson(dynamic json, {bool? emptyIsNull, bool? growable,}) =>
     json is List && json.isNotEmpty
       ? json.map(Survey.fromJson).toList(growable: true == growable)
       : true == emptyIsNull ? null : <Survey>[];
 
-  static Map<String, Survey> mapFromJson(dynamic json) {
-    final map = <String, Survey>{};
+  static Map<String, Survey?> mapFromJson(dynamic json) {
+    final map = <String, Survey?>{};
     if (json is Map && json.isNotEmpty) {
       json
         .cast<String, dynamic>()
@@ -76,8 +76,8 @@ class Survey {
   }
 
   // maps a json object with a list of Survey-objects as value to a dart map
-  static Map<String, List<Survey>> mapListFromJson(dynamic json, {bool emptyIsNull, bool growable,}) {
-    final map = <String, List<Survey>>{};
+  static Map<String, List<Survey?>?> mapListFromJson(dynamic json, {bool? emptyIsNull, bool? growable,}) {
+    final Map<String, List<Survey?>?> map = <String, List<Survey>?>{};
     if (json is Map && json.isNotEmpty) {
       json
         .cast<String, dynamic>()

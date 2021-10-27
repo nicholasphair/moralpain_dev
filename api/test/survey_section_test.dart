@@ -1,7 +1,7 @@
 //
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
-// @dart=2.0
+
 
 // ignore_for_file: unused_element, unused_import
 // ignore_for_file: always_put_required_named_parameters_first
@@ -36,23 +36,23 @@ void main() {
   group('test SurveySection', () {
     // String sectionId
     test('to test the property `sectionId`', () async {
-      expect("123", instance.sectionId);
+      expect("123", instance!.sectionId);
     });
 
     // String title
     test('to test the property `title`', () async {
-      expect("Star Wars: Episode IV", instance.title);
+      expect("Star Wars: Episode IV", instance!.title);
     });
 
     // String subtitle
     test('to test the property `subtitle`', () async {
-      expect("A New Hope", instance.subtitle);
+      expect("A New Hope", instance!.subtitle);
     });
 
     // List<SurveyOption> options (default value: const [])
     test('to test the property `options`', () async {
-      expect(2, instance.options.length);
-      expect("foo", instance.options.first.id);
+      expect(2, instance!.options!.length);
+      expect("foo", instance.options!.first!.id);
     });
   });
 }

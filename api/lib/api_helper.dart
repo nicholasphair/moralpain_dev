@@ -1,7 +1,6 @@
 //
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
-// @dart=2.0
 
 // ignore_for_file: unused_element, unused_import
 // ignore_for_file: always_put_required_named_parameters_first
@@ -17,7 +16,8 @@ class QueryParam {
   final String value;
 
   @override
-  String toString() => '${Uri.encodeQueryComponent(name)}=${Uri.encodeQueryComponent(value)}';
+  String toString() =>
+      '${Uri.encodeQueryComponent(name)}=${Uri.encodeQueryComponent(value)}';
 }
 
 // Ported from the Java version.
@@ -32,7 +32,9 @@ Iterable<QueryParam> _convertParametersForCollectionFormat(
   if (name != null && name.isNotEmpty && value != null) {
     if (value is List) {
       if (collectionFormat == 'multi') {
-        return value.map((dynamic v) => QueryParam(name, parameterToString(v)),);
+        return value.map(
+          (dynamic v) => QueryParam(name, parameterToString(v)),
+        );
       }
 
       // Default collection format is 'csv'.
@@ -43,9 +45,14 @@ Iterable<QueryParam> _convertParametersForCollectionFormat(
 
       final delimiter = _delimiters[collectionFormat] ?? ',';
 
-      params.add(QueryParam(name, value.map<dynamic>(parameterToString).join(delimiter)),);
+      params.add(
+        QueryParam(name, value.map<dynamic>(parameterToString).join(delimiter)),
+      );
     } else {
-      params.add(QueryParam(name, parameterToString(value),));
+      params.add(QueryParam(
+        name,
+        parameterToString(value),
+      ));
     }
   }
 
@@ -67,28 +74,31 @@ String parameterToString(dynamic value) {
 /// content type. Otherwise, returns the decoded body as decoded by dart:http package.
 Future<String> _decodeBodyBytes(Response response) async {
   final contentType = response.headers['content-type'];
-  return contentType != null && contentType.toLowerCase().startsWith('application/json')
-    ? response.bodyBytes == null ? null : utf8.decode(response.bodyBytes)
-    : response.body;
+  return contentType != null &&
+          contentType.toLowerCase().startsWith('application/json')
+      ? response.bodyBytes == null
+          ? ""
+          : utf8.decode(response.bodyBytes)
+      : response.body;
 }
 
 /// Returns a valid [T] value found at the specified Map [key], null otherwise.
-T mapValueOfType<T>(dynamic map, String key) {
+T? mapValueOfType<T>(dynamic map, String key) {
   final dynamic value = map is Map ? map[key] : null;
   return value is T ? value : null;
 }
 
 /// Returns a valid Map<K, V> found at the specified Map [key], null otherwise.
-Map<K, V> mapCastOfType<K, V>(dynamic map, String key) {
+Map<K, V>? mapCastOfType<K, V>(dynamic map, String key) {
   final dynamic value = map is Map ? map[key] : null;
   return value is Map ? value.cast<K, V>() : null;
 }
 
 /// Returns a valid [DateTime] found at the specified Map [key], null otherwise.
-DateTime mapDateTime(dynamic map, String key, [String pattern]) {
+DateTime? mapDateTime(dynamic map, String key, [String? pattern]) {
   final dynamic value = map is Map ? map[key] : null;
   if (value != null) {
-    int millis;
+    int? millis;
     if (value is int) {
       millis = value;
     } else if (value is String) {

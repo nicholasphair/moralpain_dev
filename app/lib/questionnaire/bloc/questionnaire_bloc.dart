@@ -20,7 +20,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
     emit(QuestionnaireLoading());
     try {
       final data = await repository.fetchDefaultSurvey();
-      emit(QuestionnaireLoaded(data));
+      emit(QuestionnaireLoaded(data!));
     } catch (error) {
       // Fail hard if we can't load the questionnaire.
       assert(false);

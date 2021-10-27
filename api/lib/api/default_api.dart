@@ -1,7 +1,7 @@
 //
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
-// @dart=2.0
+
 
 // ignore_for_file: unused_element, unused_import
 // ignore_for_file: always_put_required_named_parameters_first
@@ -12,7 +12,7 @@ part of openapi.api;
 
 
 class DefaultApi {
-  DefaultApi([ApiClient apiClient]) : apiClient = apiClient ?? defaultApiClient;
+  DefaultApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
@@ -24,7 +24,7 @@ class DefaultApi {
     final path = r'/survey';
 
     // ignore: prefer_final_locals
-    Object postBody;
+    Object? postBody;
 
     final queryParams = <QueryParam>[];
     final headerParams = <String, String>{};
@@ -47,7 +47,7 @@ class DefaultApi {
   }
 
   /// Fetch moral distress survey
-  Future<Survey> getSurvey() async {
+  Future<Survey?> getSurvey() async {
     final response = await getSurveyWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
@@ -56,7 +56,7 @@ class DefaultApi {
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
     if (response.body != null && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'Survey',) as Survey;
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'Survey',) as Survey?;
     
     }
     return Future<Survey>.value();
@@ -69,14 +69,14 @@ class DefaultApi {
   /// Parameters:
   ///
   /// * [Submission] submission:
-  Future<Response> submitSurveyWithHttpInfo({ Submission submission, }) async {
+  Future<Response> submitSurveyWithHttpInfo({ Submission? submission, }) async {
     // Verify required params are set.
 
     // ignore: prefer_const_declarations
     final path = r'/survey';
 
     // ignore: prefer_final_locals
-    Object postBody = submission;
+    Object? postBody = submission;
 
     final queryParams = <QueryParam>[];
     final headerParams = <String, String>{};
@@ -103,7 +103,7 @@ class DefaultApi {
   /// Parameters:
   ///
   /// * [Submission] submission:
-  Future<String> submitSurvey({ Submission submission, }) async {
+  Future<String?> submitSurvey({ Submission? submission, }) async {
     final response = await submitSurveyWithHttpInfo( submission: submission, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
@@ -112,7 +112,7 @@ class DefaultApi {
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
     if (response.body != null && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String?;
     
     }
     return Future<String>.value();

@@ -82,8 +82,8 @@ class QuestionnaireViewState extends State<QuestionnaireView> {
                             controller: controller,
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            children: state.questionnaire.sections
-                                .map((q) => cardForSection(q))
+                            children: state.questionnaire.sections!
+                                .map((q) => cardForSection(q!))
                                 .toList()));
                   } else {
                     return ErrorWidget(
@@ -140,9 +140,9 @@ class QuestionnaireViewState extends State<QuestionnaireView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    section.title,
+                    section.title!,
                   ),
-                  Text(section.subtitle),
+                  Text(section.subtitle!),
                 ],
               )),
           QuestionOptionsWidget(section.options)
@@ -153,7 +153,7 @@ class QuestionnaireViewState extends State<QuestionnaireView> {
 }
 
 class QuestionOptionsWidget extends StatefulWidget {
-  final List<SurveyOption> options;
+  final List<SurveyOption?>? options;
 
   QuestionOptionsWidget(this.options);
 
@@ -163,27 +163,27 @@ class QuestionOptionsWidget extends StatefulWidget {
 }
 
 class QuestionOptionsWidgetState extends State<QuestionOptionsWidget> {
-  final List<SurveyOption> options;
+  final List<SurveyOption?>? options;
   final Map<String, bool> chosen;
 
   QuestionOptionsWidgetState(this.options)
       : this.chosen =
-            Map.fromIterable(options, key: (o) => o.id, value: (_) => false);
+            Map.fromIterable(options!, key: (o) => o.id, value: (_) => false);
 
   @override
   Widget build(BuildContext context) {
     return new Column(
         children: this
-            .options
+            .options!
             .map((option) => CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
                   activeColor: Color(Constants.COLORS_UVA_BLUE),
-                  title: Text(option.description),
+                  title: Text(option!.description!),
                   value: this.chosen[option.id],
                   onChanged: (bool? value) {
                     setState(() {
                       // TODO (nphair): Update the bloc too
-                      this.chosen[option.id] = value!;
+                      this.chosen[option.id!] = value!;
                     });
                   },
                 ))

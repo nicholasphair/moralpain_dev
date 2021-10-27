@@ -1,7 +1,7 @@
 //
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
-// @dart=2.0
+
 
 // ignore_for_file: unused_element, unused_import
 // ignore_for_file: always_put_required_named_parameters_first
@@ -17,9 +17,9 @@ class SurveyOption {
     this.description,
   });
 
-  String id;
+  String? id;
 
-  String description;
+  String? description;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is SurveyOption &&
@@ -49,7 +49,7 @@ class SurveyOption {
   /// Returns a new [SurveyOption] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static SurveyOption fromJson(dynamic value) {
+  static SurveyOption? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
       return SurveyOption(
@@ -60,13 +60,13 @@ class SurveyOption {
     return null;
   }
 
-  static List<SurveyOption> listFromJson(dynamic json, {bool emptyIsNull, bool growable,}) =>
+  static List<SurveyOption?>? listFromJson(dynamic json, {bool? emptyIsNull, bool? growable,}) =>
     json is List && json.isNotEmpty
       ? json.map(SurveyOption.fromJson).toList(growable: true == growable)
       : true == emptyIsNull ? null : <SurveyOption>[];
 
-  static Map<String, SurveyOption> mapFromJson(dynamic json) {
-    final map = <String, SurveyOption>{};
+  static Map<String, SurveyOption?> mapFromJson(dynamic json) {
+    final map = <String, SurveyOption?>{};
     if (json is Map && json.isNotEmpty) {
       json
         .cast<String, dynamic>()
@@ -76,8 +76,8 @@ class SurveyOption {
   }
 
   // maps a json object with a list of SurveyOption-objects as value to a dart map
-  static Map<String, List<SurveyOption>> mapListFromJson(dynamic json, {bool emptyIsNull, bool growable,}) {
-    final map = <String, List<SurveyOption>>{};
+  static Map<String, List<SurveyOption?>?> mapListFromJson(dynamic json, {bool? emptyIsNull, bool? growable,}) {
+    final Map<String, List<SurveyOption?>?> map = <String, List<SurveyOption>?>{};
     if (json is Map && json.isNotEmpty) {
       json
         .cast<String, dynamic>()

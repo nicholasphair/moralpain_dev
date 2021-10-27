@@ -1,7 +1,7 @@
 //
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
-// @dart=2.0
+
 
 // ignore_for_file: unused_element, unused_import
 // ignore_for_file: always_put_required_named_parameters_first
@@ -26,12 +26,12 @@ void main() {
   group('test SurveyOption', () {
     // String id
     test('to test the property `id`', () async {
-      expect("Philip J. Fry", instance.id);
+      expect("Philip J. Fry", instance!.id);
     });
 
     // String description
     test('to test the property `description`', () async {
-      expect("Human", instance.description);
+      expect("Human", instance!.description);
     });
   });
 }
