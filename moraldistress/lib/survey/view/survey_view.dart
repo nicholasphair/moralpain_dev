@@ -73,11 +73,14 @@ class SurveyViewState extends State<SurveyView> {
       } else {
         // TODO (nphair): APIRepository should aready exist. Figure out how
         // to access it instead of creating a new one.
-        Navigator.push(
+
+        // Prevent going back after submitting.
+        Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    SubmittedRoute(repository: ApiRepository())));
+                    SubmittedRoute(repository: ApiRepository())),
+            (route) => route.isFirst);
       }
     } else {
       assert(false);

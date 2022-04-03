@@ -8,32 +8,111 @@ import 'package:moraldistress/submitted/submitted.dart';
 import 'package:moralpainapi/moralpainapi.dart' as api;
 import 'package:url_launcher/url_launcher.dart';
 
-class SubmittedView extends StatelessWidget {
-  const SubmittedView({Key? key}) : super(key: key);
+class SubmittedView extends StatefulWidget {
+  @override
+  SubmittedViewState createState() => SubmittedViewState();
+}
+
+class SubmittedViewState extends State<SubmittedView> {
+  final resourcesController = DraggableScrollableController();
+  final resourcesSheetMinChildSize = 0.1;
+  final resourcesSheetInitialChildSize = 0.1;
+  final resourcesSheetMaxChildSize = .75;
+  var _resourcesShowing = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text(Constants.APPBAR_TEXT)),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Flexible(flex: 2, child: thankYouHeader(context)),
-            Flexible(
-                flex: 1,
-                child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      "If you need immediate relief please page PIC1712 to notify the MDC",
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ))),
-            Flexible(
-              flex: 4,
-              child: helpfulLinkView(context),
-            ),
-          ]),
+      appBar: AppBar(
+        title: const Text(Constants.APPBAR_TEXT),
+        automaticallyImplyLeading: false,
+      ),
+      body: Stack(
+        children: [
+          Column(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(flex: 2, child: thankYouHeader(context)),
+                Flexible(
+                    flex: 1,
+                    child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          "If you need immediate relief please page PIC1712 to notify the MDC",
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ))),
+                Flexible(
+                  child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "Swipe up for suggested resiliency resources",
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      )),
+                  flex: 1,
+                ),
+                Flexible(flex: 4, child: SizedBox()),
+              ]),
+          NotificationListener<DraggableScrollableNotification>(
+              onNotification: (notification) {
+                print(notification.extent);
+                // NB (nphair): Be sure to round to handle precision of doubles.
+                var rounded =
+                    double.parse((notification.extent).toStringAsFixed(3));
+                if (rounded == notification.maxExtent) {
+                  showResources();
+                } else if (rounded == notification.minExtent) {
+                  hideResources();
+                }
+                return true;
+              },
+              child: DraggableScrollableSheet(
+                  minChildSize: resourcesSheetMinChildSize,
+                  maxChildSize: resourcesSheetMaxChildSize,
+                  initialChildSize: resourcesSheetInitialChildSize,
+                  snap: true,
+                  controller: resourcesController,
+                  builder: (context, scrollableController) {
+                    return Padding(
+                        padding: EdgeInsets.all(10),
+                        child: BlocBuilder<ResourcesBloc, ResourcesState>(
+                            builder: (context, state) {
+                          if (state is ResourcesLoaded) {
+                            var cards = state.resources.resources!;
+                            return Container(
+                                child: ListView.builder(
+                                    itemCount: cards.length + 1,
+                                    controller: scrollableController,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      if (index == 0) {
+                                        return Material(
+                                            child: resiliencyHeader());
+                                      }
+
+                                      // NB: Have to minus 1 to account for header.
+                                      var r = cards[index - 1];
+                                      return Material(
+                                          child: ListTile(
+                                              leading: buildIcon(r),
+                                              title: Text(r.title!),
+                                              onTap: () {
+                                                context
+                                                    .read<ResourcesBloc>()
+                                                    .add(ResourceVisitedEvent(
+                                                        r.resourceId!));
+                                                _launchURL(r.url!);
+                                              }));
+                                    }));
+                          } else {
+                            return Container();
+                          }
+                        }));
+                  }))
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             context.read<ResourcesBloc>().add(VisitedResourcesSubmitEvent());
@@ -41,6 +120,21 @@ class SubmittedView extends StatelessWidget {
           },
           child: Icon(Icons.home_rounded)),
     );
+  }
+
+  void showResources() => setState(() {
+        _resourcesShowing = true;
+      });
+
+  void hideResources() => setState(() {
+        _resourcesShowing = false;
+      });
+
+  ListTile resiliencyHeader() {
+    if (_resourcesShowing) {
+      return ListTile(title: Icon(Icons.arrow_drop_down_outlined));
+    }
+    return ListTile(title: Icon(Icons.arrow_drop_up_outlined));
   }
 
   Widget thankYouHeader(BuildContext context) => Container(
@@ -90,87 +184,6 @@ class SubmittedView extends StatelessWidget {
                   )
                 ])),
       );
-
-  Widget helpfulLinkView(BuildContext context) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  "Scroll down for suggested resiliency resources",
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.bodyText1,
-                )),
-            BlocBuilder<ResourcesBloc, ResourcesState>(
-                builder: (context, state) {
-              if (state is ResourcesLoaded) {
-                var sep = [
-                  buildPadding(context),
-                  buildPadding(context),
-                  buildPadding(context),
-                  buildPadding(context),
-                  buildPadding(context),
-                  buildPadding(context)
-                ];
-                var cards = state.resources.resources!
-                    .map((p0) => buildContainer(context, p0))
-                    .toList();
-                sep.addAll(cards);
-
-                return Expanded(
-                    child: GridView.count(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        childAspectRatio: 1.5,
-                        crossAxisCount: 2,
-                        children: sep));
-                // children: state.resources.resources!
-                //     .map((p0) => buildContainer(context, p0))
-                //     .toList()));
-              } else {
-                return Text("FOO");
-              }
-            })
-          ]);
-
-  Widget buildContainer(
-      BuildContext context, api.ResiliencyResource resiliencyResource) {
-    return Card(
-        elevation: 3,
-        child: InkWell(
-            splashColor: uvacolors.UVAOrange,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(resiliencyResource.title!),
-                buildIcon(resiliencyResource),
-                Text(resiliencyResource.description!),
-              ],
-            ),
-            onTap: () {
-              context
-                  .read<ResourcesBloc>()
-                  .add(ResourceVisitedEvent(resiliencyResource.resourceId!));
-              _launchURL(resiliencyResource.url!);
-            }));
-  }
-
-  Widget buildPadding(BuildContext context) {
-    return FractionallySizedBox(
-        widthFactor: 1,
-        heightFactor: 1,
-        alignment: FractionalOffset.center,
-        child: Container()
-        // DecoratedBox(
-        //   decoration: BoxDecoration(
-        //     border: Border.all(
-        //       color: Colors.blue,
-        //       width: 4,
-        //     ),
-        //   ),
-        );
-  }
 
   Widget buildIcon(api.ResiliencyResource resiliencyResource) {
     final input = resiliencyResource.icon!;
