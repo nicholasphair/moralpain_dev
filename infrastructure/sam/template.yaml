@@ -79,6 +79,7 @@ Resources:
           bucket: moralpain-submissions
           prefix: surveys
       Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_fetch_submissions_role
+      Timeout: 60
       Events:
         Get:
           Type: HttpApi
