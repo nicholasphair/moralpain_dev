@@ -35,14 +35,14 @@ packages:
       name: aws_common
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1"
+    version: "0.2.1"
   aws_signature_v4:
     dependency: "direct main"
     description:
       name: aws_signature_v4
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.2"
+    version: "0.2.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -185,7 +185,7 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.4.0"
+    version: "4.6.0"
   logging:
     dependency: transitive
     description:

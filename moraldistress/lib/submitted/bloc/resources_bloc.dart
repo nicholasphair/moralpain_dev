@@ -1,15 +1,13 @@
 import 'dart:async';
 
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cognito_authentication_repository/cognito_authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:moraldistress/api_repository.dart';
 import 'package:moralpainapi/moralpainapi.dart';
-import 'package:moralpainapi/src/model/survey.dart';
 import 'package:uuid/uuid.dart';
-import 'package:aws_signature_v4/aws_signature_v4.dart' as awssig;
+import 'package:aws_signature_v4/aws_signature_v4.dart';
 
 part 'resources_state.dart';
 part 'resources_event.dart';
@@ -35,9 +33,7 @@ class ResourcesBloc extends Bloc<ResourcesEvent, ResourcesState> {
   }
 
   void refreshCredentials(AWSCredentials credentials) {
-    var credsSigFlavor = awssig.AWSCredentials(credentials.awsAccessKey!,
-        credentials.awsSecretKey!, credentials.sessionToken);
-    repository.credentialRefresh(credsSigFlavor);
+    repository.credentialRefresh(credentials);
   }
 
   @override

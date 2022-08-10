@@ -28,9 +28,11 @@ class CognitoAuthenticationRepository {
   Future<bool> isAuthorized() async {
     try {
       final attributes = await Amplify.Auth.fetchUserAttributes()
-          .timeout(Duration(seconds: 15), onTimeout: () => List.empty());
+          .timeout(Duration(seconds: 15));
       return attributes.isNotEmpty;
     } on NotAuthorizedException {
+      return false;
+    } on TimeoutException {
       return false;
     } catch (e) {
       print('unexpected exception ${e}');
@@ -49,6 +51,8 @@ class CognitoAuthenticationRepository {
     } on SignedOutException {
       return false;
     } on TimeoutException {
+      return false;
+    } on NotAuthorizedException {
       return false;
     } catch (e) {
       print('unexpected exception ${e}');
