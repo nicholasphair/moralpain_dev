@@ -26,8 +26,8 @@ dependencies:
   aws_signature_v4_interceptor:
     path: packages/aws_signature_v4_interceptor
   amplify_flutter: ^1.0.0-next.0+1
-  amplify_auth_cognito: ^1.0.0-next.0+1
-  aws_common: ^0.2.1
+  amplify_auth_cognito: ^1.0.0-next.0+4
+  aws_common: ^0.2.2
 
 dev_dependencies:
   bloc_test: ^9.0.3

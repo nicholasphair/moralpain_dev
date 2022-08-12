@@ -72,6 +72,13 @@ class CognitoAuthenticationRepository {
     }
   }
 
+  Future<bool> signInPrivateSession() async {
+    final result = await Amplify.Auth.signInWithWebUI(
+        options:
+            const CognitoSignInWithWebUIOptions(isPreferPrivateSession: true));
+    return result.isSignedIn;
+  }
+
   Future<bool> signIn() async {
     final result = await Amplify.Auth.signInWithWebUI();
     return result.isSignedIn;

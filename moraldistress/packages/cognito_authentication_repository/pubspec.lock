@@ -14,7 +14,7 @@ packages:
       name: amplify_auth_cognito
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-next.0+3"
+    version: "1.0.0-next.0+4"
   amplify_auth_cognito_android:
     dependency: transitive
     description:
@@ -28,7 +28,7 @@ packages:
       name: amplify_auth_cognito_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.2"
+    version: "0.1.5"
   amplify_auth_cognito_ios:
     dependency: transitive
     description:
@@ -112,7 +112,7 @@ packages:
       name: aws_common
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1"
+    version: "0.2.2"
   aws_signature_v4:
     dependency: transitive
     description:

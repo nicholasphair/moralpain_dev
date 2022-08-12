@@ -13,7 +13,8 @@ class AuthCubit extends Cubit<AuthState> {
         await authRepo.signOut();
       }
 
-      if (await authRepo.signIn() && await authRepo.isAuthorized()) {
+      if (await authRepo.signInPrivateSession() &&
+          await authRepo.isAuthorized()) {
         emit(Authenticated(userId: "foo"));
       } else {
         emit(Unauthenticated());
