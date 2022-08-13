@@ -5,6 +5,7 @@ import 'package:moralpainapi/moralpainapi.dart';
 import 'package:submission_site/api_repository.dart';
 import 'package:submission_site/home/bloc/state_event.dart';
 import 'package:submission_site/home/bloc/state_state.dart';
+import '../../state_repository.dart';
 import 'mod_report_rep.dart';
 import 'state.dart';
 
@@ -13,10 +14,10 @@ Take events in response to UI clicks and return states
 */
 
 class StateBloc<T extends State> extends Bloc<StateEvent, StateState> {
-  final ApiRepository repository;
+  final StateRepository<T> repository;
 
   StateBloc({required this.repository}) : super(UnknownState<T>()) {
-    on<FetchStateEvent>(_onStateChanged);
+    on<FetchStateEvent>(_onFetchState);
     //on<HomeScoreChanged>(_onScoreChanged);
     //on<HomeSelectionsChanged>(_onSelectionsChanged);
     //on<HomeSubmissionRequested>(_onSubmissionRequested);
@@ -25,14 +26,11 @@ class StateBloc<T extends State> extends Bloc<StateEvent, StateState> {
     //on<HomeChangesSubmitted>(_onChangesSubmitted);
   }
 
-  void _onStateChanged(
-    HomeTimestampChanged event,
-    Emitter<HomeState> emit,
+  void _onFetchState(
+    StateEvent event,
+    Emitter<StateState> emit,
   ) async {
-    emit(state.copyWith(
-      timestamp: event.timestamp,
-      submitStatus: SubmitStatus.none,
-    ));
+    emit(StateFetched<State<T>>(State<T>()));
   }
 
   //void _onScoreChanged(HomeScoreChanged event, Emitter<HomeState> emit) async {
