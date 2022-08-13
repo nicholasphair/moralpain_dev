@@ -2,12 +2,12 @@ import 'package:submission_site/home/bloc/state.dart';
 
 abstract class StateState<T extends State> {}
 
-class UnknownState<T> extends StateState {}
+class UnknownState<T extends State> extends StateState<T> {}
 
-class StateFetched<T> extends StateState {
+class StateFetched<T extends State> extends StateState<T> {
   final T u;
 
   StateFetched(this.u);
 }
 
-class StateStored<T> extends StateState {}
+class StateStored<T extends State> extends StateState<T> {}

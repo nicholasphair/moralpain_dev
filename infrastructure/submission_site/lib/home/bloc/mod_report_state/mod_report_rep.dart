@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+// Use api-generated class rather than this one.
+
 // final Survey? survey; // to map reason codes to strings
 
 class ModReportRep extends Equatable {
