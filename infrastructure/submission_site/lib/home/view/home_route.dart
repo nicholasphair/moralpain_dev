@@ -3,21 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:submission_site/api_repository.dart';
 import 'package:submission_site/home/home.dart';
 
-// Top-level GUI page for "home" feature
 class HomeRoute extends StatelessWidget {
-  final ApiRepository? repository; // (1) INTERFACE TO BACK END
+  final ApiRepository? repository;
 
   const HomeRoute({this.repository, Key? key}) : super(key: key);
 
   @override
-  // Creates bloc and activates it to do an initial fetch
   Widget build(BuildContext context) {
-    // (2) Bloc
     return BlocProvider<HomeBloc>(
       create: (_) => HomeBloc(
         repository: repository ?? ApiRepository(),
-      )..add(const HomeSubmissionRequested()),
-      child: const HomeView(), // (3) GUI
+      )..add(const HomeSubmissionRequested(
+          '119ada26a0ba499182f4d6aa7c73c503',
+        )),
+      child: const HomeView(),
     );
   }
 }
