@@ -1,9 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 enum FetchStatus { initial, loading, success, failure }
-
-enum StoreStatus { none, success, failure }
-// enum SurveyStatus { initial, loading, success, failure }
+enum StoreStatus { initial, uploading, success, failure }
 
 // GUI will read and display a value of this type from a bloc
 class State<T> extends Equatable {
@@ -11,14 +9,14 @@ class State<T> extends Equatable {
   final T? conceptStateRep;
 
   // supports GUI display behavior
-  final FetchStatus fetchStatus; // determine what GUI displays
-  final StoreStatus storeStatus; // enables result status popup
+  FetchStatus fetchStatus; // determine what GUI displays
+  StoreStatus storeStatus; // enables result status popup
 
   // supports "revertibility" of changes
   final T? revertCopy; // enable revert to original
 
   // constructor, sets initial state
-  const State({
+  State({
     // underlying concept state
     this.conceptStateRep,
 
@@ -27,7 +25,7 @@ class State<T> extends Equatable {
 
     // support GUI display of status
     this.fetchStatus = FetchStatus.initial,
-    this.storeStatus = StoreStatus.none,
+    this.storeStatus = StoreStatus.initial,
   });
 
   // Supports equality comparison

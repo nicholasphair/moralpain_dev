@@ -10,19 +10,24 @@ Take events in response to UI clicks and return states
 
 class StateBloc<T> extends Bloc<StateEvent, StateState<T>> {
   final StateRepository<T> repository;
+  State<T> u = State<T>();
 
   StateBloc({required this.repository}) : super(UnknownState<T>()) {
     on<FetchStateEvent>(_fetchState);
-    //on<HomeScoreChanged>(_onScoreChanged);
-    //on<HomeSelectionsChanged>(_onSelectionsChanged);
-    //on<HomeSubmissionRequested>(_onSubmissionRequested);
-    //on<HomeSurveyRequested>(_onSurveyRequested);
-    //on<HomeChangesReverted>(_onChangesReverted);
-    //on<HomeChangesSubmitted>(_onChangesSubmitted);
+    on<StoreStateEvent>(_storeState);
   }
 
   void _fetchState(FetchStateEvent event, Emitter<StateState> emit) async {
-    State<T> state = await repository.fetchState();
-    emit(StateFetched<T>(state));
+    emit(StateFetched<T>(u..fetchStatus = FetchStatus.loading));
+    u = await repository.fetchState();
+    emit(StateFetched<T>(u));
+  }
+
+  void _storeState(StoreStateEvent event, Emitter<StateState> emit) async {
+    emit(StateStored<T>(u..storeStatus = StoreStatus.uploading));
+    StoreStatus status = await repository.storeState(u)
+        ? StoreStatus.success
+        : StoreStatus.failure;
+    emit(StateStored<T>(u..storeStatus = status));
   }
 }

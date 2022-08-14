@@ -23,10 +23,12 @@ class StateRepository<T> {
 
   /// Fetches the submission with the given ID.
   Future<State<T>> fetchState() async {
-    return await Future.value(State<T>());
+    await Future.delayed(const Duration(seconds: 2));
+    return State<T>()..fetchStatus = FetchStatus.success;
   }
 
   Future<bool> storeState(State<T> state) async {
-    return Future.value(true);
+    Future.delayed(const Duration(seconds: 2));
+    return true;
   }
 }

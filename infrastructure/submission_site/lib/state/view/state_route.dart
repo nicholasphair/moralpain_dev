@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:submission_site/state/bloc/state_event.dart';
+import 'package:submission_site/state/bloc/state_state.dart';
 import 'package:submission_site/state/view/state_view.dart';
 
 import '../bloc/state_bloc.dart';
@@ -16,7 +17,7 @@ class StateRoute<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     // (2) Bloc
     return BlocProvider<StateBloc>(
-      create: (_) => StateBloc(repository: repository)..add(FetchStateEvent()),
+      create: (_) => StateBloc(repository: repository),
       child: const StateView(), // (3) GUI
     );
   }

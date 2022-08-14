@@ -10,4 +10,8 @@ class StateFetched<T> extends StateState<T> {
   StateFetched(this.state);
 }
 
-class StateStored<T> extends StateState<T> {}
+class StateStored<T> extends StateState<T> {
+  final State<T> state;
+
+  StateStored(this.state);
+}
