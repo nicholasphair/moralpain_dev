@@ -3,15 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:submission_site/state/bloc/state_bloc.dart';
 import 'package:submission_site/state/bloc/state_state.dart';
 
-import '../bloc/state.dart' as state;
-
 class StateView<T> extends StatelessWidget {
   const StateView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    //return BlocBuilder<StateBloc<T>, StateState<state.State<T>>(
-    return BlocBuilder<StateBloc<T>, StateState<state.State>>(
+    return BlocBuilder<StateBloc<T>, StateState<T>>(
       builder: (context, state) {
         if (state is UnknownState) {
           return Text("UnknownState");

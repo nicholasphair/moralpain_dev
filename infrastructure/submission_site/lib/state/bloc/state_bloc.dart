@@ -8,10 +8,10 @@ import 'state.dart';
 Take events in response to UI clicks and return states
 */
 
-class StateBloc<T> extends Bloc<StateEvent, StateState> {
+class StateBloc<T> extends Bloc<StateEvent, StateState<T>> {
   final StateRepository<T> repository;
 
-  StateBloc({required this.repository}) : super(UnknownState<State<T>>()) {
+  StateBloc({required this.repository}) : super(UnknownState<T>()) {
     on<FetchStateEvent>(_fetchState);
     //on<HomeScoreChanged>(_onScoreChanged);
     //on<HomeSelectionsChanged>(_onSelectionsChanged);
@@ -23,6 +23,6 @@ class StateBloc<T> extends Bloc<StateEvent, StateState> {
 
   void _fetchState(FetchStateEvent event, Emitter<StateState> emit) async {
     State<T> state = await repository.fetchState();
-    emit(StateFetched<State<T>>(state));
+    emit(StateFetched<T>(state));
   }
 }

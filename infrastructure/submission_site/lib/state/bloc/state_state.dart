@@ -1,13 +1,13 @@
 import 'package:submission_site/state/bloc/state.dart';
 
-abstract class StateState<T extends State> {}
+abstract class StateState<T> {}
 
-class UnknownState<T extends State> extends StateState<T> {}
+class UnknownState<T> extends StateState<T> {}
 
-class StateFetched<T extends State> extends StateState<T> {
-  final T u;
+class StateFetched<T> extends StateState<T> {
+  final State<T> state;
 
-  StateFetched(this.u);
+  StateFetched(this.state);
 }
 
-class StateStored<T extends State> extends StateState<T> {}
+class StateStored<T> extends StateState<T> {}
