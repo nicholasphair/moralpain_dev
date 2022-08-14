@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:submission_site/home/bloc/state_event.dart';
-import 'package:submission_site/home/home.dart';
-import 'package:submission_site/home/view/state_view.dart';
+import 'package:submission_site/state/bloc/state_event.dart';
+import 'package:submission_site/state/view/state_view.dart';
 
 import '../bloc/state_bloc.dart';
 import '../../state_repository.dart';

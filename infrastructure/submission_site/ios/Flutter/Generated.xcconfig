@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/opt/flutter
-FLUTTER_APPLICATION_PATH=/workspaces/moralpain_dev/infrastructure/submission_site
+FLUTTER_ROOT=/Users/nickphair/.local/share/flutter
+FLUTTER_APPLICATION_PATH=/opt/devel/uva/repos/moralpain_dev/infrastructure/submission_site
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_TARGET=lib/main.dart
 FLUTTER_BUILD_DIR=build

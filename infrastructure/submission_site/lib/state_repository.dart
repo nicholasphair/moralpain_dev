@@ -3,10 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:moralpainapi/moralpainapi.dart';
 
-import 'home/bloc/state.dart';
+import 'state/bloc/state.dart';
 
 class StateRepository<T> {
-  final Logger log = Logger('StateRepository');
+  const StateRepository();
+
+  // TODO (nphair): I think we are going to need to either pass in an Api
+  // implementationn or have a factory for creating apis from types...
+
   //final Moralpainapi mapi = Moralpainapi(
   //    basePathOverride:
   //        'https://0rl322u1u8.execute-api.us-east-1.amazonaws.com/v1');

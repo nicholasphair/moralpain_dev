@@ -1,4 +1,4 @@
-import 'package:submission_site/home/bloc/state.dart';
+import 'package:submission_site/state/bloc/state.dart';
 
 abstract class StateState<T extends State> {}
 
