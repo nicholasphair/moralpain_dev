@@ -1,0 +1,129 @@
+openapi: "3.0.0"
+info:
+  title: survey
+  description: survey
+  version: 1.0.0
+paths:
+  /receive:
+    get:
+      operationId: receive
+      summary: receive
+      description: >
+        receive
+      responses:
+        "200":
+          description: |-
+            200 response
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/survey'
+      x-amazon-apigateway-integration:
+        httpMethod: get
+        type: aws
+        uri: "arn:aws:apigateway:${AWS::Region}:s3:path/moralpain-resources/questionnaire.json"
+        credentials: "arn:aws:iam::${AWS::AccountId}:role/apigateway_s3_survey_role"
+        passthroughBehavior: when_no_match
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+  /submit:
+    post:
+      operationId: submit
+      summary: submit
+      description: |
+        submit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/submission'
+      responses:
+        "200":
+          description: |-
+            200 response
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+      x-amazon-apigateway-integration:
+        httpMethod: post
+        type: aws_proxy
+        uri: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:SurveySubmit/invocations
+        credentials: arn:aws:iam::${AWS::AccountId}:role/apigateway-lambda-submit-role
+        passthroughBehavior: "when_no_match"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type'''
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+components:
+  schemas:
+    survey:
+      type: object
+      properties:
+        version:
+          type: string
+        sections:
+          type: array
+          items:
+            $ref: "#/components/schemas/surveySection"
+    surveySection:
+      type: object
+      properties:
+        sectionId:
+          type: string
+        title:
+          type: string
+        subtitle:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: "#/components/schemas/surveyOption"
+    surveyOption:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+    submissions:
+      type: array
+      items: 
+        $ref: "#/components/schemas/submission"
+    submission:
+      type: object
+      properties:
+        submitterId:
+          type: string
+        score:
+          type: integer
+        timestamp:
+          type: integer
+        selections:
+          type: array
+          items:
+            type: string

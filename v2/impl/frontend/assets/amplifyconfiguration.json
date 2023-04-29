@@ -1,0 +1,65 @@
+{
+    "UserAgent": "aws-amplify-cli/2.0",
+    "Version": "1.0",
+    "auth": {
+        "plugins": {
+            "awsCognitoAuthPlugin": {
+                "UserAgent": "aws-amplify-cli/0.1.0",
+                "Version": "0.1.0",
+                "IdentityManager": {
+                    "Default": {}
+                },
+                "CredentialsProvider": {
+                    "CognitoIdentity": {
+                        "Default": {
+                            "PoolId": "us-east-1:b5daa06b-1b4e-475b-afda-2560f47c50dd",
+                            "Region": "us-east-1"
+                        }
+                    }
+                },
+                "CognitoUserPool": {
+                    "Default": {
+                        "PoolId": "us-east-1_rSLr084Gn",
+                        "AppClientId": "35k4upj9of3jbqfclvd4ssko3c",
+                        "Region": "us-east-1"
+                    }
+                },
+                "Auth": {
+                    "Default": {
+                        "OAuth": {
+                            "WebDomain": "feurrefsplv-user-pool-domain.auth.us-east-1.amazoncognito.com",
+                            "AppClientId": "35k4upj9of3jbqfclvd4ssko3c",
+                            "SignInRedirectURI": "http://localhost:3000/,https://nicholasphair.github.io/moralpain_dev/,myapp://",
+                            "SignOutRedirectURI": "http://localhost:3000/,https://nicholasphair.github.io/moralpain_dev/,myapp://",
+                            "Scopes": [
+                                "aws.cognito.signin.user.admin",
+                                "email",
+                                "openid",
+                                "phone",
+                                "profile"
+                            ]
+                        },
+                        "authenticationFlowType": "USER_SRP_AUTH",
+                        "socialProviders": [],
+                        "usernameAttributes": [],
+                        "signupAttributes": [
+                            "EMAIL",
+                            "NAME"
+                        ],
+                        "passwordProtectionSettings": {
+                            "passwordPolicyMinLength": 8,
+                            "passwordPolicyCharacters": []
+                        },
+                        "mfaConfiguration": "OFF",
+                        "mfaTypes": [
+                            "SMS"
+                        ],
+                        "verificationMechanisms": [
+                            "EMAIL"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

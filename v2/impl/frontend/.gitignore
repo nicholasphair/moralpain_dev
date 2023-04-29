@@ -30,6 +30,7 @@
 .pub-cache/
 .pub/
 /build/
+packages/**/build
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -44,13 +45,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# Java
-target
-.aws-sam
-
-# Dart API Client
-*.g.dart
-
-docs/build
-venv
+/android/app/build

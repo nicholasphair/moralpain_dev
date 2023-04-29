@@ -1,0 +1,79 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Composer to decide what an authenticated user has access to.
+Parameters:
+  Name:
+    Description: friendly identifier for cognito resources.
+    Type: String
+  IdentityPool:
+    Description: identity pool
+    Type: String
+
+Resources:
+  IdentityPoolRoleAttachment:
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    Properties:
+      IdentityPoolId: !Ref IdentityPool
+      Roles:
+        "authenticated": !GetAtt AuthRole.Arn
+        "unauthenticated": !GetAtt UnauthRole.Arn
+
+  AuthRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${Name}AuthRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: cognito-identity.amazonaws.com
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                cognito-identity.amazonaws.com:aud: !Ref IdentityPool
+              ForAnyValue:StringLike:
+                cognito-identity.amazonaws.com:amr: authenticated
+      Policies:
+        - PolicyName: !Sub ${Name}authPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - execute-api:Invoke
+                Resource:
+                  Fn::Sub: arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*/*
+
+  UnauthRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${Name}UnauthRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Deny
+            Principal:
+              Federated: cognito-identity.amazonaws.com
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                cognito-identity.amazonaws.com:aud: !Ref IdentityPool
+              ForAnyValue:StringLike:
+                cognito-identity.amazonaws.com:amr: unauthenticated
+      Policies:
+        - PolicyName: !Sub ${Name}UnauthPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - execute-api:Deny
+
+                Resource:
+                  Fn::Sub: arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*/*
+
+Outputs:
+  AuthRoleArn:
+    Value: !Ref AuthRole
+  UnauthRoleArn:
+    Value: !Ref UnauthRole

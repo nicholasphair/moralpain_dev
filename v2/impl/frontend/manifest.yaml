@@ -1,0 +1,52 @@
+---
+repositories:
+  - classname: CognitoAuthenticationRepository
+    namespace: cognito
+  - classname: ApiRepository
+    namespace: aapi
+  - classname: ApiRepository
+    namespace: thermometerapi
+  - classname: ApiRepository
+    namespace: surveyapi
+blocs:
+  - classname: AuthCubit
+    repositories:
+      - CognitoAuthenticationRepository
+      - ApiRepository
+    namespace: abloc
+  - classname: ThermometerCubit
+    repositories:
+      - ApiRepository
+    namespace: thermometerbloc
+  - classname: SurveyBloc
+    repositories:
+      - ApiRepository
+    namespace: surveybloc
+view:
+  - classname: AuthWrappedApp
+imports:
+  - import: authcompose/amplifyconfiguration.dart
+  - import: authcompose/navigator.dart
+  - import: authcompose/app.dart
+  - import: auth/auth/view/auth_navigator.dart
+  - import: auth/auth/bloc/auth_cubit.dart
+    as: abloc
+  - import: auth/auth/view/auth_loading_layout.dart
+  - import: auth/auth/view/auth_signin_layout.dart
+  - import: auth/api_repository.dart
+    as: aapi
+  - import: cognito_authentication_repository/cognito_authentication_repository.dart
+    as: cognito
+  - import: sequentialcompose/sequentialcomposer_frontend_mediator.dart
+  - import: thermometer/api_repository.dart
+    as: thermometerapi
+  - import: thermometer/thermometer/view/thermometer_layout.dart
+    as: thermometerview
+  - import: thermometer/thermometer/cubit/thermometer_cubit.dart
+    as: thermometerbloc
+  - import: survey/api_repository.dart
+    as: surveyapi
+  - import: survey/survey/view/survey_layout.dart
+    as: surveyview
+  - import: survey/survey/bloc/survey_bloc.dart
+    as: surveybloc

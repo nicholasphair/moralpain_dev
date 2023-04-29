@@ -1,0 +1,37 @@
+---
+name: authcompose
+description: auth compose app
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+  flutter: "^3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  bloc: ^8.0.3
+  flutter_bloc: ^8.0.1
+  logging: ^1.0.2
+  uuid: 3.0.6
+  amplify_flutter: ^1.0.1
+  amplify_auth_cognito: ^1.0.1
+  aws_common: ^0.4.2+5
+
+  # TODO 
+  auth:
+    path: /opt/devel/uva/repos/concepts_exploration/auth/impl/frontend
+  sequentialcompose:
+    path: /opt/devel/uva/repos/concepts_exploration/sequentialcompose/tests/scratch/impl/frontend
+
+dev_dependencies:
+  bloc_test: ^9.0.3
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.3.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/amplifyconfiguration.json

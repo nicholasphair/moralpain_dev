@@ -1,0 +1,9 @@
+template_path: auth-scratch-identity-pool-roles.template
+parameters:
+  Name: !stack_attr project_code
+  IdentityPool: !stack_output auth-cognito/auth-cognito-agw-auth-moralpain.yaml::IdentityPoolId
+hooks:
+  after_create:
+  - !compose_amplify_config
+    prefix: !stack_attr project_code
+    amplify_config: /opt/devel/uva/repos/moralpain_dev/v2/impl/frontend/assets/amplifyconfiguration.json

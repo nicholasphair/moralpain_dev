@@ -1,0 +1,10 @@
+---
+template:
+  type: sam
+  path: templates/scratch-survey-api.yaml
+  artifact_bucket_name: !stack_attr template_bucket_name
+  build_args:
+    base-dir: ../code
+
+parameters:
+  Prefix: !stack_attr project_code

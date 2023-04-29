@@ -1,0 +1,117 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Cognito resources for setting auth up on AGW.
+Parameters:
+  Prefix:
+    Description: friendly identifier for cognito resources.
+    Type: String
+
+Resources:
+
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      AccountRecoverySetting: 
+        RecoveryMechanisms: 
+          - Name: verified_email
+            Priority: 1
+      UserPoolName: !Sub ${Prefix}-user-pool
+      AutoVerifiedAttributes:
+        - email
+      MfaConfiguration: 'OFF'
+      Schema:
+        - Name: name
+          AttributeDataType: String
+          Mutable: true
+          Required: true
+        - Name: email
+          AttributeDataType: String
+          Mutable: false
+          Required: true
+        - Name: experimentRole
+          AttributeDataType: String
+          Mutable: false
+          Required: false
+
+  UserPoolDomain: 
+    Type: AWS::Cognito::UserPoolDomain 
+    Properties:
+      UserPoolId: !Ref UserPool 
+      Domain: !Sub ${Prefix}-user-pool-domain
+
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: !Sub ${Prefix}-client
+      CallbackURLs:
+        - 'myapp://'
+        - 'https://nicholasphair.github.io/moralpain_dev/'
+        - 'http://localhost:3000/'
+      LogoutURLs:
+        - 'myapp://'
+        - 'https://nicholasphair.github.io/moralpain_dev/'
+        - 'http://localhost:3000/'
+
+      AllowedOAuthFlowsUserPoolClient: true
+      AllowedOAuthFlows:
+        - code
+      AllowedOAuthScopes:
+        - aws.cognito.signin.user.admin
+        - email
+        - openid
+        - phone
+        - profile
+      GenerateSecret: false
+      UserPoolId: !Ref UserPool
+      SupportedIdentityProviders:
+        - COGNITO
+
+  UserPoolUICustomization: 
+    Type: AWS::Cognito::UserPoolUICustomizationAttachment 
+    Properties: 
+      UserPoolId: !Ref UserPool
+      ClientId: !Ref UserPoolClient
+      CSS: |
+        .logo-customizable {
+          max-width: 100%;
+          max-height: 100%;
+        }
+
+        .banner-customizable {
+          padding: 10px 0px 10px 0px;
+          background-color: #232D4B;
+        }
+
+        .submitButton-customizable {
+          font-size: 14px;
+          font-weight: bold;
+          margin: 20px 0px 10px 0px;
+          height: 40px;
+          width: 100%;
+          color: #fff;
+          background-color: #232D4B;
+        }
+
+        .submitButton-customizable:hover {
+          opacity: .92;
+        }
+
+  IdentityPool:
+    Type: AWS::Cognito::IdentityPool
+    Properties: 
+      AllowUnauthenticatedIdentities: false
+      CognitoIdentityProviders: 
+        - ClientId: !Ref UserPoolClient
+          ProviderName: !Sub cognito-idp.${AWS::Region}.amazonaws.com/${UserPool}
+      IdentityPoolName: !Sub ${Prefix}-identity-pool
+
+Outputs:
+  UserPoolId:
+    Value: !Ref UserPool
+  UserPoolArn:
+    Value: !GetAtt UserPool.Arn
+  UserPoolClientId:
+    Value: !Ref UserPoolClient
+  IdentityPoolId:
+    Value: !Ref IdentityPool
+  IdentityPoolName:
+    Value: !GetAtt IdentityPool.Name

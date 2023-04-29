@@ -1,0 +1,4 @@
+---
+template_path: auth-cognito-agw-auth.template
+parameters:
+  Prefix: !stack_attr project_code

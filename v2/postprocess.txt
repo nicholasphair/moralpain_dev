@@ -1,0 +1,37 @@
+1. Fix imports
+2. Remove hardcoded bool somewhere.
+3. Add sequentialcomposer_bloc to providers
+
++ Remove *.aws-sam/ in templates
++ Remove db parameters from therm templates and config
++ pip install hooks, pydantic
++ `sceptre create scratch-survey-api` failed because code directory did not make it over.
++ code/functions directory depends on code/generated. which is open api generated. make this part of the build
++ submit survey bucket and prefix needs to be updated
++ remove boolapp static dependency
++  basePathOverride: 'https://ih620rd619.execute-api.us-east-1.amazonaws.com/v1'); needs to come from a config. 
++ need to add dio interceptor
++ edit arn:aws:iam::745161175455:policy/apigateway-lambda-submit-policy to call invoke function in openapi
++ edit actuall function thiat is called in openapi 
++ lambda bug fixes
+
+
+--- 
+nice to have
+
++ new buckets for s3 artifacts
++ make project code not random but a timestamp unique per app
++ code/functions directory depends on code/generated. which is open api generated. make this part of the build
+
+
+--- 
+Good
++ no problems deploying cognito
+
+
+
+
+---
+scratch
+
+{'IdentityPoolId': 'us-east-1:b5daa06b-1b4e-475b-afda-2560f47c50dd', 'IdentityPoolName': 'feurrefsplv-identity-pool', 'AllowUnauthenticatedIdentities': False, 'CognitoIdentityProviders': [{'ProviderName': 'cognito-idp.us-east-1.amazonaws.com/us-east-1_rSLr084Gn', 'ClientId': '35k4upj9of3jbqfclvd4ssko3c', 'ServerSideTokenCheck': False}], 'IdentityPoolTags': {}, 'ResponseMetadata': {'RequestId': '747b07ae-6ebc-4424-a471-c96c00a6b6ac', 'HTTPStatusCode': 200, 'HTTPHeaders': {'date': 'Fri, 28 Apr 2023 02:05:15 GMT', 'content-type': 'application/x-amz-json-1.1', 'content-length': '544', 'connection': 'keep-alive', 'x-amzn-requestid': '747b07ae-6ebc-4424-a471-c96c00a6b6ac', 'strict-transport-security': 'max-age=31536000; includeSubDomains'}, 'RetryAttempts': 0}}

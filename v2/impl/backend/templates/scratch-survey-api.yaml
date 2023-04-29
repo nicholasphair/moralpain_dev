@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  survey
+
+Parameters:
+  Prefix:
+    Description: unique identifier for resources
+    Type: String
+    Default: ""
+
+Globals:
+  Function:
+    Timeout: 20
+
+Resources:
+  ApiGatewayApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub ${Prefix}SurveyApi
+      OpenApiVersion: 3.0.1
+      StageName: v1
+      DefinitionUri: openapi.yaml
+
+  SurveySubmit:
+    Type: AWS::Serverless::Function 
+    Properties:
+      FunctionName: !Sub ${Prefix}SurveySubmit
+      CodeUri: Functions
+      Handler: edu.uva.cs.concepts.survey.Submit::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          bucket: jackson-concepts-concepts
+          prefix: survey
+      Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda-s3-submit-role
+
+Outputs:
+  APIUri:
+    Value: !Sub "https://${ApiGatewayApi}.execute-api.${AWS::Region}.amazonaws.com"
+  SurveySubmitFunctionAPI:
+    Description: "API Gateway endpoint URL for Prod stage for SurveySubmit function"
+    Value: !Sub "https://${ApiGatewayApi}.execute-api.${AWS::Region}.amazonaws.com/v1/SurveySubmit/"
+  SurveySubmitFunction:
+    Description: "SurveySubmit Lambda Function ARN"
+    Value: !GetAtt SurveySubmit.Arn

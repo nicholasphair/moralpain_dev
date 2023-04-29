@@ -1,0 +1,12 @@
+[
+  {
+    "score": 5,
+    "selections" : [
+      "001_01",
+      "002_02",
+      "003_03"
+    ],
+    "timestamp": 1609459200,
+    "submitterId": "foobar"
+  }
+]
